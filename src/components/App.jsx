@@ -1,16 +1,12 @@
+import BookList from './BookList/BookList';
+import booksData from '../books.json';
+
+const books = booksData.books;
+
 export const App = () => {
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
+    <div>
+      <BookList books={books} listTitle="Book List" />
     </div>
   );
 };
