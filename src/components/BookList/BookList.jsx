@@ -3,25 +3,27 @@ import PropTypes from 'prop-types';
 
 import Book from 'components/Book/Book';
 
+import { StyledBookList, StyledTitle } from './BookList.styled';
+
 function BookList({ books, listTitle = '' }) {
   return (
     <>
-      {listTitle && <h2>{listTitle}</h2>}
-      <ul className="book-list">
+      {listTitle && <StyledTitle>{listTitle}</StyledTitle>}
+      <StyledBookList>
         {books.map(book => {
           return (
             <Book
               key={book.id}
               title={book.title}
               author={book.author}
-               year={book.year}
+              year={book.year}
               genre={book.genre}
               favourite={book.favourite}
               url={book.cover}
             />
           );
         })}
-      </ul>
+      </StyledBookList>
     </>
   );
 }
