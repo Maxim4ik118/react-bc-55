@@ -1,8 +1,12 @@
 import PropTypes from 'prop-types';
 
-import { StyledBook, StyledButton } from './Book.styled';
+import { getRandomHecColor } from 'helpers/getRandomHexColor';
+import Button from 'components/Button/Button';
+
+import { StyledBook } from './Book.styled';
 
 const Book = ({
+  id,
   title,
   author,
   year,
@@ -10,18 +14,14 @@ const Book = ({
   url,
   favourite = false,
   className = '',
+  onRemoveBook,
 }) => {
+  const bgColor = getRandomHecColor();
   return (
-    <StyledBook 
-      className={className} 
-      favourite={favourite}
-    >
-      {/* <Button className="delete-btn">
+    <StyledBook $bgColor={bgColor} className={className} $favourite={favourite}>
+      <Button variant="secondary" onClick={() => onRemoveBook(id)}>
         <b>Delete</b> &times;
-      </Button> */}
-      <StyledButton>
-        <b>Delete</b> &times;
-      </StyledButton>
+      </Button>
 
       <h2>
         Title: {title} {favourite ? '💖' : '🎧'}
@@ -42,7 +42,7 @@ Book.propTypes = {
   url: PropTypes.string,
   favourite: PropTypes.bool,
   className: PropTypes.string,
-  variant: PropTypes.string,
+  onRemoveBook: PropTypes.func.isRequired,
 };
 
 export default Book;

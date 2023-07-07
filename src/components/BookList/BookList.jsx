@@ -1,11 +1,10 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 
 import Book from 'components/Book/Book';
 
 import { StyledBookList, StyledTitle } from './BookList.styled';
 
-function BookList({ books, listTitle = '' }) {
+function BookList({ books, onRemoveBook, listTitle = '' }) {
   return (
     <>
       {listTitle && <StyledTitle>{listTitle}</StyledTitle>}
@@ -14,12 +13,14 @@ function BookList({ books, listTitle = '' }) {
           return (
             <Book
               key={book.id}
+              id={book.id}
               title={book.title}
               author={book.author}
               year={book.year}
               genre={book.genre}
               favourite={book.favourite}
               url={book.cover}
+              onRemoveBook={onRemoveBook}
             />
           );
         })}
@@ -30,6 +31,7 @@ function BookList({ books, listTitle = '' }) {
 
 BookList.propTypes = {
   listTitle: PropTypes.string,
+  onRemoveBook: PropTypes.func.isRequired,
   books: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,

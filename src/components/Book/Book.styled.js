@@ -9,9 +9,10 @@ export const StyledBook = styled.li`
   align-items: flex-start;
   padding: 10px;
   border: ${props =>
-    props.favourite ? '1px solid #b003fd' : '1px solid black'};
+    props.$favourite ? '1px solid #b003fd' : '1px solid black'};
   border-radius: 15px;
-  background-color: ${props => (props.favourite ? '#dbf6ac' : '#f6e4ac')};
+  /* background-color: ${props => (props.favourite ? '#dbf6ac' : '#f6e4ac')}; */
+  background-color: ${props => props.$bgColor};
   max-width: 350px;
 
   /* &.favourite {
