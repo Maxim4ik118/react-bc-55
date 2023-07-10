@@ -16,7 +16,7 @@ const Book = ({
   className = '',
   onRemoveBook,
 }) => {
-  const bgColor = getRandomHecColor();
+  const bgColor = "biedge";
   return (
     <StyledBook $bgColor={bgColor} className={className} $favourite={favourite}>
       <Button variant="secondary" onClick={() => onRemoveBook(id)}>

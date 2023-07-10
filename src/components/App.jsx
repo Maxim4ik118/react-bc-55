@@ -1,49 +1,61 @@
 import { Component } from 'react';
+import { nanoid } from 'nanoid';
 import BookList from './BookList/BookList';
 import Button from './Button/Button';
 import Container from './Container/Container';
 
 import booksData from '../data/books.json';
+import SearchBar from './SearchBar/SearchBar';
+import BookForm from './BookForm/BookForm';
 
 // import css from './App.module.css';
 
 export class App extends Component {
   state = {
     books: booksData.books,
-    visibleDetails: false,
+    searchValue: '',
   };
 
   onRemoveBook = bookId => {
-    // bookId = 2
-    // [{id: 1}, {id: 2}, {id: 3}]
-    // [{id: 1}, {id: 3}]
-
     this.setState({
-      books: this.state.books.filter((book) => book.id !== bookId)
+      books: this.state.books.filter(book => book.id !== bookId),
     });
   };
 
-  onToggleDetails = () => {
-    this.setState({
-      visibleDetails: !this.state.visibleDetails,
-    });
+  onAddBook = bookData => {
+    const book = { id: nanoid(), ...bookData };
+
+    this.setState({ books: [book, ...this.state.books] });
+    // this.setState(prevState => ({ books: [book, ...prevState.books] }));
+  };
+
+  onFilter = filterTerm => {
+    this.setState({ searchValue: filterTerm });
   };
 
   render() {
+    const filteredBooks = this.state.books.filter(book =>
+      book.title
+        .toLowerCase()
+        .includes(this.state.searchValue.toLowerCase().trim())
+    );
+
     return (
       <div>
-        {/* <Button variant="none">Click to magiiiic</Button>
-          <Button variant="no-border">Click to magiiiic</Button>
-          <Button variant="primary">Click to magiiiic</Button>
-           */}
-        <Button variant="secondary" onClick={this.onToggleDetails}>
-          Click to magiiiic
-        </Button>
-        {this.state.visibleDetails && <p>Some details</p>}
+        <Container>
+          <BookForm onAddBook={this.onAddBook} />
+        </Container>
+        <Container>
+          <SearchBar
+            searchValue={this.state.searchValue}
+            onFilter={this.onFilter}
+            title="Search Book"
+          />
+        </Container>
         <Container>
           <BookList
             onRemoveBook={this.onRemoveBook}
-            books={this.state.books}
+            books={filteredBooks}
             listTitle="Book List"
           />
         </Container>
