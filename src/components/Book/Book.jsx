@@ -15,12 +15,21 @@ const Book = ({
   favourite = false,
   className = '',
   onRemoveBook,
+  onOpenModal,
 }) => {
-  const bgColor = "biedge";
+  const bgColor = 'biedge';
   return (
     <StyledBook $bgColor={bgColor} className={className} $favourite={favourite}>
       <Button variant="secondary" onClick={() => onRemoveBook(id)}>
         <b>Delete</b> &times;
+      </Button>
+      <Button
+        variant="primary"
+        onClick={() =>
+          onOpenModal({ id, title, author, year, genre, url, favourite })
+        }
+      >
+        <b>Open modal</b>
       </Button>
 
       <h2>

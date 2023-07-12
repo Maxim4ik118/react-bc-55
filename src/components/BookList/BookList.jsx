@@ -4,7 +4,7 @@ import Book from 'components/Book/Book';
 
 import { StyledBookList, StyledTitle } from './BookList.styled';
 
-function BookList({ books, onRemoveBook, listTitle = '' }) {
+function BookList({ books, onRemoveBook, onOpenModal, listTitle = '' }) {
   return (
     <>
       {listTitle && <StyledTitle>{listTitle}</StyledTitle>}
@@ -21,6 +21,7 @@ function BookList({ books, onRemoveBook, listTitle = '' }) {
               favourite={book.favourite}
               url={book.cover}
               onRemoveBook={onRemoveBook}
+              onOpenModal={onOpenModal}
             />
           );
         })}
@@ -32,6 +33,7 @@ function BookList({ books, onRemoveBook, listTitle = '' }) {
 BookList.propTypes = {
   listTitle: PropTypes.string,
   onRemoveBook: PropTypes.func.isRequired,
+  onOpenModal: PropTypes.func.isRequired,
   books: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
