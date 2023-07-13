@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 
-import { getRandomHecColor } from 'helpers/getRandomHexColor';
 import Button from 'components/Button/Button';
 
 import { StyledBook } from './Book.styled';
@@ -9,24 +8,21 @@ const Book = ({
   id,
   title,
   author,
-  year,
-  genre,
   url,
+  description,
   favourite = false,
   className = '',
-  onRemoveBook,
   onOpenModal,
 }) => {
-  const bgColor = 'biedge';
   return (
-    <StyledBook $bgColor={bgColor} className={className} $favourite={favourite}>
-      <Button variant="secondary" onClick={() => onRemoveBook(id)}>
+    <StyledBook className={className} $favourite={favourite}>
+      {/* <Button variant="secondary" onClick={() => onRemoveBook(id)}>
         <b>Delete</b> &times;
-      </Button>
+      </Button> */}
       <Button
         variant="primary"
         onClick={() =>
-          onOpenModal({ id, title, author, year, genre, url, favourite })
+          onOpenModal({ id, title, author, description, url, favourite })
         }
       >
         <b>Open modal</b>
@@ -36,8 +32,7 @@ const Book = ({
         Title: {title} {favourite ? '💖' : '🎧'}
       </h2>
       <h3>Author: {author}</h3>
-      <p className="par1">year: {year}</p>
-      <p className="par2">Genre: {genre}</p>
+      {description && <p className="par1">Description: {description}</p>}
       <img className="bookImg" src={url} alt={title} />
     </StyledBook>
   );
@@ -46,12 +41,10 @@ const Book = ({
 Book.propTypes = {
   title: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
-  year: PropTypes.number.isRequired,
-  genre: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
   url: PropTypes.string,
   favourite: PropTypes.bool,
   className: PropTypes.string,
-  onRemoveBook: PropTypes.func.isRequired,
 };
 
 export default Book;

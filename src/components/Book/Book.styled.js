@@ -4,7 +4,6 @@ import Button from 'components/Button/Button';
 
 export const StyledBook = styled.li`
   display: flex;
-  gap: 8px;
   flex-direction: column;
   align-items: flex-start;
   padding: 10px;
@@ -14,6 +13,8 @@ export const StyledBook = styled.li`
   /* background-color: ${props => (props.favourite ? '#dbf6ac' : '#f6e4ac')}; */
   background-color: ${props => props.$bgColor};
   max-width: 350px;
+  margin: 0 auto;
+  /* max-height: 400px; */
 
   /* &.favourite {
     border: 1px solid #b003fd;
@@ -21,17 +22,20 @@ export const StyledBook = styled.li`
   } */
 
   & .par1 {
-    margin-bottom: 15px;
+    margin-bottom: 8px;
   }
 
   & .par2 {
-    padding-bottom: 15px;
+    padding-bottom: 8px;
   }
 
   & .bookImg {
     max-width: 100%;
     display: block;
     margin: 0 auto;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
   }
 
   /* & .delete-btn {

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledBookList = styled.ul`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 25px;
   padding: 0 15px;
 `;

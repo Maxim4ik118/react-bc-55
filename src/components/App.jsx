@@ -44,6 +44,7 @@ import booksData from '../data/books.json';
 export class App extends Component {
   state = {
     books: [],
+    currentPage: 1,
     searchValue: '',
     modal: { isOpen: false, modalData: null },
   };
@@ -51,9 +52,7 @@ export class App extends Component {
   componentDidMount() {
     const stringifiedBooks = localStorage.getItem('books');
     const parsedBooks = JSON.parse(stringifiedBooks) ?? [];
-    // null ?? [] -> []
-    // undefined ?? [] -> []
-    // [{id: 2}, {id: 3}] ?? [] -> [{id: 2}, {id: 3}]
+
     this.setState({ books: parsedBooks });
   }
 
@@ -74,16 +73,26 @@ export class App extends Component {
     this.setState({ modal: { isOpen: false, modalData: null } });
 
   onRemoveBook = bookId => {
-    this.setState({
-      books: this.state.books.filter(book => book.id !== bookId),
-    });
+    this.setState(prevState => ({
+      books: prevState.books.filter(book => book.id !== bookId),
+    }));
+
+    // this.setState({ currentPage: 1 + 1 });
+    // this.setState({ currentPage:  1 + 1 });
+    // this.setState({ currentPage: 1 + 1 });
+    // currentPage -> 2
+
+    // this.setState((prevState) => ({ currentPage: 1 + 1 }));
+    // this.setState((prevState) => ({ currentPage: 2 + 1 }));
+    // this.setState((prevState) => ({ currentPage: 3 + 1 }));
+    // currentPage -> 4
   };
 
   onAddBook = bookData => {
     const book = { id: nanoid(), ...bookData };
 
-    this.setState({ books: [book, ...this.state.books] });
-    // this.setState(prevState => ({ books: [book, ...prevState.books] }));
+    this.setState(prevState => ({ books: [book, ...prevState.books] }));
+    // this.setState({ books: [book, ...this.state.books] });
   };
 
   onFilter = filterTerm => {
