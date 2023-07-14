@@ -1,16 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Button from 'components/Button/Button';
-
-/*
-1. Розмітити саму форму тегами.
-2. Створити стейт з полями під кожен інпут.
-3. Всім інпутам задати значення аттрибуту name 
-   відповідно до поля в стейті з яким інпут буде зв'язаний.
-4. Зв'язати (value)наших інпутів з відповідними полями в стейті.
-5. Створити універсальний обробник для інпутів
-*/
 
 const INITIAL_STATE = {
   title: '',
@@ -22,109 +13,99 @@ const INITIAL_STATE = {
   favourite: false,
 };
 
-export default class BookForm extends Component {
-  state = { ...INITIAL_STATE };
+export default function BookForm({ onAddBook }) {
+  // state = { ...INITIAL_STATE };
+  const [formData, setFormData] = useState(INITIAL_STATE);
 
-  onInputsChange = event => {
+  const onInputsChange = event => {
     const value = event.target.value;
     const fieldName = event.target.name;
     const checked = event.target.checked;
     const type = event.target.type;
 
-    if (type === 'checkbox') {
-      this.setState({ [fieldName]: checked });
-    } else {
-      this.setState({ [fieldName]: value });
-    }
+    // if (type === 'checkbox') {
+    //   this.setState({ [fieldName]: checked });
+    // } else {
+    //   this.setState({ [fieldName]: value });
+    // }
 
-    // if (fieldName === 'title') {
-    //   this.setState({ title: value });
-    // }
-    // if (fieldName === 'author') {
-    //   this.setState({ author: value });
-    // }
-    // if (fieldName === 'year') {
-    //   this.setState({ year: value });
-    // }
-    // if (fieldName === 'genre') {
-    //   this.setState({ genre: value });
-    // }
-    // if (fieldName === 'favourite') {
-    //   this.setState({ favourite: checked });
-    // }
+    if (type === 'checkbox') {
+      setFormData({ ...formData, [fieldName]: checked });
+      // setFormData(prevState => ({ ...prevState, [fieldName]: checked }));
+    } else {
+      setFormData({ ...formData, [fieldName]: value });
+    }
   };
 
-  handleSumbit = event => {
+  const handleSumbit = event => {
     event.preventDefault();
 
     const bookData = {
-      ...this.state,
-      year: Number.parseInt(this.state.year),
+      ...formData,
+      year: Number.parseInt(formData.year),
     };
 
-    this.props.onAddBook(bookData);
+    onAddBook(bookData);
 
     // reset
-    event.target.reset()
-    this.setState({ ...INITIAL_STATE });
+    // this.setState(INITIAL_STATE);
+    setFormData(INITIAL_STATE);
   };
 
-  render() {
-    return (
-      <form onSubmit={this.handleSumbit}>
-        <label>
-          <span>Title:</span>
-          <input
-            value={this.state.title}
-            onChange={this.onInputsChange}
-            type="text"
-            name="title"
-            required
-          />
-        </label>
-        <label>
-          <span>Author:</span>
-          <input
-            value={this.state.author}
-            onChange={this.onInputsChange}
-            type="text"
-            name="author"
-            required
-          />
-        </label>
-        <label>
-          <span>Year:</span>
-          <input
-            value={this.state.year}
-            onChange={this.onInputsChange}
-            type="number"
-            name="year"
-            required
-          />
-        </label>
-        <label>
-          <span>Genre:</span>
-          <input
-            value={this.state.genre}
-            onChange={this.onInputsChange}
-            type="text"
-            name="genre"
-            required
-          />
-        </label>
-        <label>
-          <span>Favourite:</span>
-          <input
-            checked={this.state.favourite}
-            onChange={this.onInputsChange}
-            type="checkbox"
-            name="favourite"
-          />
-        </label>
-        <Button type="submit">&oplus; Add Book</Button>
-      </form>
-    );
-  }
+  return (
+    <form onSubmit={handleSumbit}>
+      <label>
+        <span>Title:</span>
+        <input
+          value={formData.title}
+          onChange={onInputsChange}
+          type="text"
+          name="title"
+          required
+        />
+      </label>
+      <label>
+        <span>Author:</span>
+        <input
+          value={formData.author}
+          onChange={onInputsChange}
+          type="text"
+          name="author"
+          required
+        />
+      </label>
+      <label>
+        <span>Year:</span>
+        <input
+          value={formData.year}
+          onChange={onInputsChange}
+          type="number"
+          name="year"
+          required
+        />
+      </label>
+      <label>
+        <span>Genre:</span>
+        <input
+          value={formData.genre}
+          onChange={onInputsChange}
+          type="text"
+          name="genre"
+          required
+        />
+      </label>
+      <label>
+        <span>Favourite:</span>
+        <input
+          checked={formData.favourite}
+          onChange={onInputsChange}
+          type="checkbox"
+          name="favourite"
+        />
+      </label>
+      <Button type="submit">&oplus; Add Book</Button>
+    </form>
+  );
 }
 
 BookForm.propTypes = {
