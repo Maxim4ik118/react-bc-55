@@ -1,7 +1,8 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Button from 'components/Button/Button';
+import { BookContext } from 'context/BookContext';
 
 const INITIAL_STATE = {
   title: '',
@@ -13,9 +14,14 @@ const INITIAL_STATE = {
   favourite: false,
 };
 
-export default function BookForm({ onAddBook }) {
-  // state = { ...INITIAL_STATE };
+export default function BookForm() {
   const [formData, setFormData] = useState(INITIAL_STATE);
+  // const [feedbackOptions, setFeedbackOptions] = useState({
+  //   good: 0,
+  //   neutral: 0,
+  //   bad: 0,
+  // });
+  const { onAddBook } = useContext(BookContext);
 
   const onInputsChange = event => {
     const value = event.target.value;
@@ -23,15 +29,17 @@ export default function BookForm({ onAddBook }) {
     const checked = event.target.checked;
     const type = event.target.type;
 
-    // if (type === 'checkbox') {
-    //   this.setState({ [fieldName]: checked });
-    // } else {
-    //   this.setState({ [fieldName]: value });
-    // }
-
     if (type === 'checkbox') {
       setFormData({ ...formData, [fieldName]: checked });
-      // setFormData(prevState => ({ ...prevState, [fieldName]: checked }));
+
+      // setFeedbackOptions({
+      //   ...feedbackOptions,
+      //   [fieldName]: feedbackOptions[fieldName] + 1,
+      // }); // { neutral: 0, bad: 0, good: 1, }
+      // setFeedbackOptions(prevState => ({
+      //   ...prevState,
+      //   [fieldName]: prevState[fieldName] + 1,
+      // })); // { neutral: 0, bad: 0, good: 1, }
     } else {
       setFormData({ ...formData, [fieldName]: value });
     }
@@ -48,7 +56,6 @@ export default function BookForm({ onAddBook }) {
     onAddBook(bookData);
 
     // reset
-    // this.setState(INITIAL_STATE);
     setFormData(INITIAL_STATE);
   };
 
@@ -108,6 +115,6 @@ export default function BookForm({ onAddBook }) {
   );
 }
 
-BookForm.propTypes = {
-  onAddBook: PropTypes.func.isRequired,
-};
+// BookForm.propTypes = {
+//   onAddBook: PropTypes.func.isRequired,
+// };

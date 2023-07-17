@@ -9,22 +9,13 @@ import { requestBooksByCategory, requestCategoryList } from 'services/api';
 import { StyledBookShelf } from './styled';
 
 export default function App2() {
-  // state = {
-  //   categoryList: [],
-  //   booksList: null,
-  //   isLoading: false,
-  //   error: null,
-  //   selectedCategory: null,
-  // };
   const [categoryList, setCategoryList] = useState([]);
   const [booksList, setBooksList] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+    
 
-  // componentDidMount() {
-  //   this.fetchCategories();
-  // }
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -45,12 +36,6 @@ export default function App2() {
     fetchCategories();
   }, []); // -> componentDidMount
 
-  // componentDidUpdate(_, prevState) {
-  //   if (prevState.selectedCategory !== this.state.selectedCategory) {
-  //     this.fetchBooksByCategory(this.state.selectedCategory);
-  //   }
-  // }
-
   useEffect(() => {
     if (!selectedCategory) return;
 
@@ -70,7 +55,6 @@ export default function App2() {
   }, [selectedCategory]); // -> componentDidUpdate
 
   const onSelectCategory = category => {
-    // this.setState({ selectedCategory: category });
     setSelectedCategory(category);
   };
 

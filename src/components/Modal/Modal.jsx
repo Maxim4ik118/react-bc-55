@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { StyledModal, StyledOverlay } from './styled';
 
 export default function Modal({ modalData, onCloseModal }) {
   const [dataType, setDataType] = useState('users'); // "users" | "posts" | "comments"
   const [counter, setCounter] = useState(0);
+  const btnCountRef = useRef(null); // { current: null }
 
   const handleClickOverlay = event => {
     if (event.target === event.currentTarget) {
@@ -16,13 +17,10 @@ export default function Modal({ modalData, onCloseModal }) {
   };
 
   const handleCount = () => {
-    setCounter(prevState => prevState + 1);
-    // setCounter(counter + 1);
+    btnCountRef.current = btnCountRef.current ? btnCountRef.current + 1 : 1;
+    
+    console.log(btnCountRef.current);
   };
-  // this.setState((prevState) => ({
-  //  counter: prevState.counter + 1,
-  //  dataType: type
-  // }))
 
   useEffect(() => {
     const handleKeyDown = event => {
@@ -37,23 +35,7 @@ export default function Modal({ modalData, onCloseModal }) {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [onCloseModal]);
-
-  useEffect(() => {
-    console.log('Actual counter value: ' + counter);
-  }, [counter]); // componentDidMount + componentDidUpdate
-
-  useEffect(() => {
-    console.log('Actual dataType: ' + dataType);
-  }, [dataType]); // componentDidMount + componentDidUpdate
-
-  // componentDidMount() {
-  //   window.addEventListener('keydown', this.handleKeyDown);
-  // }
-
-  // componentWillUnmount() {
-  //   window.removeEventListener('keydown', this.handleKeyDown);
-  // }
-
+  console.log("render");
   return (
     <StyledOverlay onClick={handleClickOverlay}>
       <StyledModal>
