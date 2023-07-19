@@ -1,7 +1,8 @@
 import Button from 'components/Button/Button';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const CategoryList = ({ categoryList, onSelectCategory, className = '' }) => {
+const CategoryList = ({ categoryList, className = '' }) => {
   const showCategoryList =
     Array.isArray(categoryList) && categoryList.length > 0;
 
@@ -10,16 +11,15 @@ const CategoryList = ({ categoryList, onSelectCategory, className = '' }) => {
       <h2>Category List</h2>
       <ul>
         {showCategoryList &&
-          categoryList.map(category => (
-            <li key={category.list_name}>
-              <Button
-                onClick={() => onSelectCategory(category.list_name)}
-                variant="secondary"
-              >
-                {category.list_name}
-              </Button>
-            </li>
-          ))}
+          categoryList.map(category => {
+            return (
+              <li key={category.list_name}>
+                <Link to={`/books/${category.list_name}/category`}>
+                  {category.list_name}
+                </Link>
+              </li>
+            );
+          })}
       </ul>
     </div>
   );

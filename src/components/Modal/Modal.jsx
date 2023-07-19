@@ -1,10 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyledModal, StyledOverlay } from './styled';
 
 export default function Modal({ modalData, onCloseModal }) {
   const [dataType, setDataType] = useState('users'); // "users" | "posts" | "comments"
-  const [counter, setCounter] = useState(0);
-  const btnCountRef = useRef(null); // { current: null }
 
   const handleClickOverlay = event => {
     if (event.target === event.currentTarget) {
@@ -14,12 +12,6 @@ export default function Modal({ modalData, onCloseModal }) {
 
   const handleLeaveTabChange = type => {
     setDataType(type);
-  };
-
-  const handleCount = () => {
-    btnCountRef.current = btnCountRef.current ? btnCountRef.current + 1 : 1;
-    
-    console.log(btnCountRef.current);
   };
 
   useEffect(() => {
@@ -35,7 +27,6 @@ export default function Modal({ modalData, onCloseModal }) {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, [onCloseModal]);
-  console.log("render");
   return (
     <StyledOverlay onClick={handleClickOverlay}>
       <StyledModal>
@@ -52,12 +43,9 @@ export default function Modal({ modalData, onCloseModal }) {
           <button onClick={() => handleLeaveTabChange('comments')}>
             Comments
           </button>
-          <button onClick={handleCount}>Add count</button>
           <h3>
             Current dataType: <strong>{dataType}</strong>
           </h3>
-
-          <p>Click count: {counter}</p>
         </div>
       </StyledModal>
     </StyledOverlay>

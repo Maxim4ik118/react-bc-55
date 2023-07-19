@@ -8,12 +8,12 @@ import { BookContext } from 'context/BookContext';
 
 function BookList({
   onOpenModal,
+  books,
+  searchValue = '',
   listTitle = '',
   className = '',
   selectedCategory,
 }) {
-  const { searchValue, books } = useContext(BookContext);
-
   const filteredBooks = books.filter(book =>
     book.title.toLowerCase().includes(searchValue.toLowerCase().trim())
   );
@@ -28,8 +28,8 @@ function BookList({
           filteredBooks.map(book => {
             return (
               <Book
-                key={book.id}
-                id={book.id}
+                key={book._id}
+                id={book._id}
                 author={book.author}
                 url={book.book_image}
                 title={book.title}
@@ -50,7 +50,7 @@ BookList.propTypes = {
   className: PropTypes.string,
   books: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      _id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       author: PropTypes.string.isRequired,
       description: PropTypes.string,
