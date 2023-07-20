@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Link, Route, Routes, useLocation } from 'react-router-dom';
+import React, { Suspense, lazy } from 'react';
+import { Link, Navigate, Route, Routes } from 'react-router-dom';
 
 import Loader from './Loader/Loader';
-import BookList from './BookList/BookList';
-import CategoryList from './CategoryList/CategoryList';
 
-import Home from 'pages/Home';
-import Categories from 'pages/Categories';
-import TopBooks from 'pages/TopBooks';
+// import Home from 'pages/Home';
+// import Categories from 'pages/Categories';
+// import BooksByCategory from 'pages/BooksByCategory';
+// import SearchComments from 'pages/SearchComments';
 
-import { requestBooksByCategory, requestCategoryList } from 'services/api';
-
-import { StyledBookShelf } from './styled';
-import BooksByCategory from 'pages/BooksByCategory';
+const Home = lazy(() => import('pages/Home'));
+const Categories = lazy(() => import('pages/Categories'));
+const BooksByCategory = lazy(() => import('pages/BooksByCategory'));
+const SearchComments = lazy(() => import('pages/SearchComments'));
 
 /*
 Маршрутеризація:
@@ -32,22 +31,25 @@ export default function App2() {
         <nav>
           <Link to="/">Home</Link>
           <Link to="/categories">Categories</Link>
+          <Link to="/search-comments">Search Comments</Link>
         </nav>
       </header>
       <main>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/categories" element={<Categories />} />
-         
-          <Route
-            path="/books/:categoryName/category/*"
-            element={<BooksByCategory />}
-          />
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/categories" element={<Categories />} />
+            <Route path="/search-comments" element={<SearchComments />} />
 
-          <Route path="*" element={<h1>Error 404</h1>} />
-        </Routes>
+            <Route
+              path="/books/:categoryName/category/*"
+              element={<BooksByCategory />}
+            />
+
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </Suspense>
       </main>
-      <footer>Footer</footer>
     </div>
   );
 }

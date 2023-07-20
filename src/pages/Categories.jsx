@@ -7,6 +7,7 @@ import { requestCategoryList } from 'services/api';
 
 import { StyledBookShelf } from 'components/styled';
 
+
 const Categories = () => {
   const [categoryList, setCategoryList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);

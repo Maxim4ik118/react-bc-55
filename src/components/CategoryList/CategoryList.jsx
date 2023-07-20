@@ -1,8 +1,10 @@
-import Button from 'components/Button/Button';
+// import Button from 'components/Button/Button';import { useLocation } from 'react-router-dom';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const CategoryList = ({ categoryList, className = '' }) => {
+  const location = useLocation();
+
   const showCategoryList =
     Array.isArray(categoryList) && categoryList.length > 0;
 
@@ -14,7 +16,10 @@ const CategoryList = ({ categoryList, className = '' }) => {
           categoryList.map(category => {
             return (
               <li key={category.list_name}>
-                <Link to={`/books/${category.list_name}/category`}>
+                <Link
+                  state={{ from: location }}
+                  to={`/books/${category.list_name}/category`}
+                >
                   {category.list_name}
                 </Link>
               </li>

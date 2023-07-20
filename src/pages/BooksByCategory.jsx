@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { Link, Route, Routes, useParams } from 'react-router-dom';
+import { Suspense, lazy, useEffect, useRef, useState } from 'react';
+
+import { Link, Route, Routes, useLocation, useParams } from 'react-router-dom';
 
 import BookList from 'components/BookList/BookList';
 import Loader from 'components/Loader/Loader';
 
-import TopBooks from './TopBooks';
-
+// import TopBooks from './TopBooks';
 import { requestBooksByCategory } from 'services/api';
+
+const TopBooks = lazy(() => import('./TopBooks'));
 
 const BooksByCategory = () => {
   const [booksList, setBooksList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const { categoryName } = useParams();
+
+  const location = useLocation();
+  const backLinkRef = useRef(location.state?.from);
 
   useEffect(() => {
     if (!categoryName) return;
@@ -35,6 +40,7 @@ const BooksByCategory = () => {
   return (
     <div>
       <h1>BooksByCategory</h1>
+      <Link to={backLinkRef.current ?? '/'}>Go back</Link>
       {error && (
         <div>
           <p>Opps, some error occured... Error: {error}</p>
@@ -54,9 +60,11 @@ const BooksByCategory = () => {
 
       <div>
         <Link to="top-books">Top Books</Link>
-        <Routes>
-          <Route path="top-books" element={<TopBooks />} />
-        </Routes>
+        <Suspense fallback={<Loader />}>
+          <Routes>
+            <Route path="top-books" element={<TopBooks />} />
+          </Routes>
+        </Suspense>
       </div>
     </div>
   );
