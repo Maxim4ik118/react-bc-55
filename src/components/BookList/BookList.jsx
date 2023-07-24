@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import Book from 'components/Book/Book';
 
 import { StyledBookList, StyledTitle } from './BookList.styled';
-import { useContext } from 'react';
-import { BookContext } from 'context/BookContext';
 
 function BookList({
   onOpenModal,

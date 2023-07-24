@@ -1,9 +1,6 @@
-import { useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import { BookContext } from 'context/BookContext';
-
-import Button from 'components/Button/Button';
+// import Button from 'components/Button/Button';
 
 import { StyledBook } from './Book.styled';
 
@@ -16,24 +13,10 @@ const Book = ({
   description,
   favourite = false,
   className = '',
-  onOpenModal,
 }) => {
-  const { todayDate } = useContext(BookContext)
 
   return (
     <StyledBook className={className} $favourite={favourite}>
-      {/* <Button variant="secondary" onClick={() => onRemoveBook(id)}>
-        <b>Delete</b> &times;
-      </Button> */}
-      <Button
-        variant="primary"
-        onClick={() =>
-          onOpenModal({ id, title, author, description, url, favourite })
-        }
-      >
-        <b>Open modal</b>
-      </Button>
-
       <h2>
         Title: {title} {favourite ? '💖' : '🎧'}
       </h2>
