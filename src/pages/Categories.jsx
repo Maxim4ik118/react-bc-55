@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CategoryList from 'components/CategoryList/CategoryList';
@@ -6,8 +6,14 @@ import Loader from 'components/Loader/Loader';
 
 import { requestCategoryList } from 'services/api';
 
+import {
+  clearCategories,
+  setCategoryList,
+  setError,
+  setIsLoading,
+} from 'redux/categoriesReducer';
+
 import { StyledBookShelf } from 'components/styled';
-import { setIsLoading } from 'redux/categoriesReducer';
 
 /*
 Робота з редаксом: 
@@ -38,12 +44,11 @@ const Categories = () => {
   const isLoading = useSelector(state => state.categories.isLoading);
   const error = useSelector(state => state.categories.error);
   const dispatch = useDispatch();
-  // const [categoryList, setCategoryList] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState(null);
 
-  const handleClearCategories = () => {
-    dispatch({ type: 'categories/clearCategories' });
+  const handleClearCategories = (bookId, newBookData) => {
+    dispatch(clearCategories());
+ //   dispatch(deleteBook(bookId));
+ //   dispatch(addBook(newBookData));
   };
 
   useEffect(() => {
@@ -52,9 +57,9 @@ const Categories = () => {
         dispatch(setIsLoading(true));
 
         const catList = await requestCategoryList();
-        dispatch({ type: 'categories/setCategoryList', payload: catList });
+        dispatch(setCategoryList(catList));
       } catch (error) {
-        dispatch({ type: 'categories/setError', payload: error.message });
+        dispatch(setError(error.message));
       } finally {
         dispatch(setIsLoading(false));
       }
