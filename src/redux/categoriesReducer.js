@@ -1,4 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { requestCategoryList } from 'services/api';
+
+export const requestCategoriesThunk = createAsyncThunk(
+  'categories/requestCategories',
+  async (_, thunkAPI) => {
+    try {
+      const catList = await requestCategoryList();
+      return catList;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
 const initialState = {
   categoryList: null,
@@ -12,16 +25,6 @@ const categoriesSlice = createSlice({
   name: 'categories',
   initialState,
   reducers: {
-    setIsLoading: (state, action) => {
-      state.isLoading = action.payload;
-      state.loaderActivationCounter = state.loaderActivationCounter + 1;
-    },
-    setCategoryList: (state, action) => {
-      state.categoryList = action.payload;
-    },
-    setError: (state, action) => {
-      state.error = action.payload;
-    },
     clearCategories: (state, action) => {
       state.categoryList = [];
     },
@@ -38,10 +41,29 @@ const categoriesSlice = createSlice({
       state.books = [...state.books, action.payload];
     },
   },
+  extraReducers: builder =>
+    builder
+      .addCase(requestCategoriesThunk.pending, (state, action) => {
+        state.isLoading = true;
+        state.loaderActivationCounter = state.loaderActivationCounter + 1;
+        state.error = null;
+      })
+      .addCase(requestCategoriesThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.categoryList = action.payload;
+      })
+      .addCase(requestCategoriesThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      }),
 });
 
-export const { setIsLoading, setCategoryList, setError, clearCategories } =
-  categoriesSlice.actions;
+export const { clearCategories } = categoriesSlice.actions;
+
+export const selectCategories = state => state.categories.categoryList;
+export const selectCategoriesLoading = state => state.categories.isLoading;
+export const selectCategoriesError = state => state.categories.error;
+
 export const categoriesReducer = categoriesSlice.reducer;
 
 // export const categoriesReducer = (state = initialState, action) => {

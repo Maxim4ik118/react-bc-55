@@ -1,19 +1,21 @@
 import { Suspense, lazy, useEffect, useRef, useState } from 'react';
-
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, Route, Routes, useLocation, useParams } from 'react-router-dom';
 
 import BookList from 'components/BookList/BookList';
 import Loader from 'components/Loader/Loader';
 
+import { requestBooksByCategoryThunk, selectBookList, selectBooksError, selectBooksIsLoading } from 'redux/booksByCategoryReducer.js';
 // import TopBooks from './TopBooks';
-import { requestBooksByCategory } from 'services/api';
+// import { requestBooksByCategory } from 'services/api';
 
 const TopBooks = lazy(() => import('./TopBooks'));
 
 const BooksByCategory = () => {
-  const [booksList, setBooksList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch()
+  const booksList = useSelector(selectBookList);
+  const isLoading = useSelector(selectBooksIsLoading);
+  const error = useSelector(selectBooksError);
   const { categoryName } = useParams();
 
   const location = useLocation();
@@ -22,20 +24,8 @@ const BooksByCategory = () => {
   useEffect(() => {
     if (!categoryName) return;
 
-    const fetchBooksByCategory = async () => {
-      try {
-        setIsLoading(true);
-        const bList = await requestBooksByCategory(categoryName);
-        setBooksList(bList);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchBooksByCategory();
-  }, [categoryName]); // -> componentDidUpdate + componentDidMount
+    dispatch(requestBooksByCategoryThunk(categoryName))
+  }, [categoryName, dispatch]); // -> componentDidUpdate + componentDidMount
 
   return (
     <div>

@@ -8,6 +8,10 @@ import { requestCategoryList } from 'services/api';
 
 import {
   clearCategories,
+  requestCategoriesThunk,
+  selectCategories,
+  selectCategoriesError,
+  selectCategoriesLoading,
   setCategoryList,
   setError,
   setIsLoading,
@@ -40,32 +44,24 @@ NOTE: Action - це об'єкт, в якого має бути обов'язко
 */
 
 const Categories = () => {
-  const categoryList = useSelector(state => state.categories.categoryList);
-  const isLoading = useSelector(state => state.categories.isLoading);
-  const error = useSelector(state => state.categories.error);
+  const categoryList = useSelector(selectCategories);
+  const isLoading = useSelector(selectCategoriesLoading);
+  const error = useSelector(selectCategoriesError);
   const dispatch = useDispatch();
 
   const handleClearCategories = (bookId, newBookData) => {
     dispatch(clearCategories());
- //   dispatch(deleteBook(bookId));
- //   dispatch(addBook(newBookData));
+    //   dispatch(deleteBook(bookId));
+    //   dispatch(addBook(newBookData));
   };
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        dispatch(setIsLoading(true));
-
-        const catList = await requestCategoryList();
-        dispatch(setCategoryList(catList));
-      } catch (error) {
-        dispatch(setError(error.message));
-      } finally {
-        dispatch(setIsLoading(false));
-      }
-    };
-
-    fetchCategories();
+    dispatch(requestCategoriesThunk())
+      // .unwrap()
+      // .then(() => {
+      //   alert('Hello world');
+      // })
+      // .catch(err => alert(err.message));
   }, [dispatch]); // -> componentDidMount
 
   return (

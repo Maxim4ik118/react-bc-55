@@ -1,8 +1,6 @@
-import React, { useContext } from 'react';
-import { BookContext } from 'context/BookContext';
+import React from 'react';
 
-function SearchBar({ title }) {
-  const { onFilter, searchValue } = useContext(BookContext);
+function SearchBar({ title, onFilter, searchValue }) {
 
   const handleInputChange = event => {
     onFilter(event.target.value);
