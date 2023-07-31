@@ -11,18 +11,18 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
-import { categoriesReducer } from './categoriesReducer';
+import { userReducer } from './userReducer';
 import { booksByCategoryReducer } from './booksByCategoryReducer.js';
 
-const categoriesPersistConfig = {
-  key: 'categories',
+const userPersistConfig = {
+  key: 'user',
   storage,
-  whitelist: ['loaderActivationCounter', 'books'],
+  whitelist: ['token'],
 };
 
 export const store = configureStore({
   reducer: {
-    categories: persistReducer(categoriesPersistConfig, categoriesReducer),
+    user: persistReducer(userPersistConfig, userReducer),
     booksByCategory: booksByCategoryReducer,
   },
   middleware: getDefaultMiddleware =>

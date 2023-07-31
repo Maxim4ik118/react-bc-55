@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { requestBooksByCategory } from 'services/api';
+// import { requestBooksByCategory } from 'services/api';
 
 export const requestBooksByCategoryThunk = createAsyncThunk(
   'booksByCategory/requestBooksByCategory',
   async (categoryName, thunkAPI) => {
     try {
-      const bookList = await requestBooksByCategory(categoryName);
-      return bookList;
+      // const bookList = await requestBooksByCategory(categoryName);
+      // return bookList;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
