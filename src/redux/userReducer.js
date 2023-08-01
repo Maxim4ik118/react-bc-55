@@ -55,11 +55,10 @@ export const refreshUserThunk = createAsyncThunk(
       const data = await currentUserRequest(); // Тут ми робимо запит за даними користувача вже з токеном в хедерах
 
       return data;
-      // Some logic
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const initialState = {

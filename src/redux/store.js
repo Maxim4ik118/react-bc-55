@@ -12,7 +12,7 @@ import {
 import storage from 'redux-persist/lib/storage';
 
 import { userReducer } from './userReducer';
-import { booksByCategoryReducer } from './booksByCategoryReducer.js';
+import { contactsReducer } from './contactsReducer';
 
 const userPersistConfig = {
   key: 'user',
@@ -23,7 +23,7 @@ const userPersistConfig = {
 export const store = configureStore({
   reducer: {
     user: persistReducer(userPersistConfig, userReducer),
-    booksByCategory: booksByCategoryReducer,
+    phonebook: contactsReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

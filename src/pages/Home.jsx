@@ -1,3 +1,4 @@
+import withAuthRedirect from 'HOC/withAuthRedirect';
 import React from 'react';
 
 const Home = () => {

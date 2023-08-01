@@ -18,7 +18,7 @@ export default function App() {
   const token = useSelector(state => state.user.token);
 
   useEffect(() => {
-    if(!token) return;
+    if (!token) return;
 
     dispatch(refreshUserThunk());
   }, [dispatch, token]);
@@ -54,7 +54,10 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/contacts" element={<Contacts />} />
+            <Route
+              path="/contacts"
+              element={<Contacts helloProps={'hello'} />}
+            />
 
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
