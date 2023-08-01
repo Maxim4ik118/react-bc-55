@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import AddContactForm from 'components/AddContactForm/AddContactForm';
 import Loader from 'components/Loader/Loader';
 
-import { deleteContact, fetchContacts } from 'redux/contactsReducer';
 import withAuthRedirect from 'HOC/withAuthRedirect';
+import { deleteContact, fetchContacts } from 'redux/contactsOperations';
 
 const Contacts = () => {
   const dispatch = useDispatch();

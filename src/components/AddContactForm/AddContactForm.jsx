@@ -1,7 +1,7 @@
 import Button from 'components/Button/Button';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addContact } from 'redux/contactsReducer';
+import { addContact } from 'redux/contactsOperations';
 
 const AddContactForm = () => {
   const dispatch = useDispatch();
